@@ -70,7 +70,8 @@
     }
   },
   "contributors": [
-    "Kamaz <kamaz@xsimple.org>"
+    "Kamaz <kamaz@xsimple.org>",
+    "Dan <devbydan@gmail.com>"
   ],
-  "version": "0.0.6-0"
+  "version": "0.0.5"
 }
