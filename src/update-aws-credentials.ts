@@ -1,6 +1,6 @@
 import aws, { STS } from "aws-sdk";
 import { config } from "dotenv";
-import { join, pickAll, merge, compose, toPairs, map } from "ramda";
+import { pickAll } from "ramda";
 import { writeFileSync } from "fs";
 import { join as joinPath } from "path";
 import os from "os";
@@ -14,6 +14,42 @@ export type Authentication = {
   role?: string;
   sessionDuration: string;
 };
+
+const quote = /[\s"']/
+
+type StringifyPair = [
+  key: string,
+  value: string
+]
+
+const stringifyPair = (values: StringifyPair) => {
+  const [key, val] = values
+  let strval = ''
+  switch (typeof val) {
+    case 'string':
+      try {
+        JSON.parse(val)
+        strval = val
+      } catch (e) {
+        strval = quote.test(val) ? JSON.stringify(val) : val
+      }
+      break
+    case 'boolean':
+    case 'number':
+      strval = String(val)
+      break
+    case 'undefined':
+      strval = ''
+      break
+    case 'object':
+      if (val !== null) {
+        strval = JSON.stringify(val)
+      }
+      break
+  }
+  return `${key}=${strval}`
+}
+
 
 const getCredentials = async (
   authentication: Authentication
@@ -69,21 +105,22 @@ export const updateAWSCredentials = async (authentication: Authentication) => {
 
   const dotEnvValues = config().parsed || {};
 
-  const newDotEnvValues = compose(
-    join(os.EOL),
-    map(join("=")),
-    toPairs,
-    merge(dotEnvValues)
-  )({
+  const newDotEnvValues = {
+    ...dotEnvValues,
     AWS_ACCESS_KEY_ID: awsAccessValues.AccessKeyId,
     AWS_SECRET_ACCESS_KEY: awsAccessValues.SecretAccessKey,
     AWS_SESSION_TOKEN: awsAccessValues.SessionToken,
     DAM_USER: user,
     DAM_ACCOUNT: account,
     DAM_PROFILE: profile,
-  });
+  };
 
-  writeFileSync(joinPath(process.cwd(), ".env"), newDotEnvValues, {
+  const newDotValuesStringify = Object.entries(newDotEnvValues).map((value) => stringifyPair(value)).join(os.EOL)
+
+
+  writeFileSync(joinPath(process.cwd(), ".env"), newDotValuesStringify, {
     encoding: "utf-8",
   });
+
+
 };

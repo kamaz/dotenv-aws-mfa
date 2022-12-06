@@ -18,7 +18,8 @@ describe("Update aws credentials", () => {
       `AWS_ACCESS_KEY_ID="ASIA3SGQNTYDDFJPYCNA"
 AWS_SECRET_ACCESS_KEY="TZnnmsmsYseyC5io9hJIkCxh13mqwYWa/vaetnMo"
 AWS_SESSION_TOKEN="FwoGZXIvYXdzEAcaDIHwLivlg2VGUaqINyKGAUBAWZoV96oA2yeSe9kQSEg7OSkHdVwn5FPJ5s/GiNTCZ+o/srvYIEWeuDwOhHzfRWmIbcmmFHlRuKoySLMx8Jg2tEUUbZTuYmpbBWS/9tdgGuNhSy/mKlvYiNipsdL13/6EhLG8A47arV9R9ysVNWPpUV2Q3Cx7G1CzqrH6hDEZvFE2l9HOKJSO/vAFMijQE/ASeQF8u0ycr/8U+VK2LtCw5VMIxM6YIVhSzzhVcbZOw4yiUiJa"
-TEST=true`,
+TEST=true
+DOUBLE_QUOTES="I am a string"`,
       {
         encoding: "utf-8",
       }
@@ -40,6 +41,7 @@ TEST=true`,
 AWS_SECRET_ACCESS_KEY=secret
 AWS_SESSION_TOKEN=token
 TEST=true
+DOUBLE_QUOTES="I am a string"
 DAM_USER=kamil@cabiri.io
 DAM_ACCOUNT=1234
 DAM_PROFILE=cabiri`);
@@ -58,7 +60,8 @@ DAM_PROFILE=cabiri`);
       `AWS_ACCESS_KEY_ID="ASIA3SGQNTYDDFJPYCNA"
 AWS_SECRET_ACCESS_KEY="TZnnmsmsYseyC5io9hJIkCxh13mqwYWa/vaetnMo"
 AWS_SESSION_TOKEN="FwoGZXIvYXdzEAcaDIHwLivlg2VGUaqINyKGAUBAWZoV96oA2yeSe9kQSEg7OSkHdVwn5FPJ5s/GiNTCZ+o/srvYIEWeuDwOhHzfRWmIbcmmFHlRuKoySLMx8Jg2tEUUbZTuYmpbBWS/9tdgGuNhSy/mKlvYiNipsdL13/6EhLG8A47arV9R9ysVNWPpUV2Q3Cx7G1CzqrH6hDEZvFE2l9HOKJSO/vAFMijQE/ASeQF8u0ycr/8U+VK2LtCw5VMIxM6YIVhSzzhVcbZOw4yiUiJa"
-TEST=true`,
+TEST=true
+DOUBLE_QUOTES="I am a string"`,
       {
         encoding: "utf-8",
       }
@@ -79,6 +82,7 @@ TEST=true`,
 AWS_SECRET_ACCESS_KEY=secret
 AWS_SESSION_TOKEN=token
 TEST=true
+DOUBLE_QUOTES="I am a string"
 DAM_USER=kamil@cabiri.io
 DAM_ACCOUNT=1234
 DAM_PROFILE=default`);
