@@ -15,15 +15,15 @@ export type Authentication = {
   sessionDuration: string;
 };
 
-const quote = /[\s"']/
-
 type StringifyPair = [
   key: string,
   value: string
 ]
 
-const stringifyPair = (values: StringifyPair) => {
-  const [key, val] = values
+
+const quote = /[\s"']/
+
+const stringifyPair = (key: string, val: string) => {
   let strval = ''
   switch (typeof val) {
     case 'string':
@@ -115,12 +115,11 @@ export const updateAWSCredentials = async (authentication: Authentication) => {
   }
 
   const newDotEnvValues = mergeRight(dotEnvValues, awsDotEnvValues)
-  const newDotValuesStringify = Object.entries(newDotEnvValues).map((value) => stringifyPair(value)).join(os.EOL)
+  const newDotValuesStringify = Object.keys(newDotEnvValues).map((key) => stringifyPair(key, newDotEnvValues[key])).join(os.EOL)
 
 
   writeFileSync(joinPath(process.cwd(), ".env"), newDotValuesStringify, {
     encoding: "utf-8",
   });
-
 
 };
