@@ -1,6 +1,6 @@
 import aws, { STS } from "aws-sdk";
 import { config } from "dotenv";
-import { pickAll } from "ramda";
+import { pickAll, mergeRight } from "ramda";
 import { writeFileSync } from "fs";
 import { join as joinPath } from "path";
 import os from "os";
@@ -105,16 +105,16 @@ export const updateAWSCredentials = async (authentication: Authentication) => {
 
   const dotEnvValues = config().parsed || {};
 
-  const newDotEnvValues = {
-    ...dotEnvValues,
+  const awsDotEnvValues = {
     AWS_ACCESS_KEY_ID: awsAccessValues.AccessKeyId,
     AWS_SECRET_ACCESS_KEY: awsAccessValues.SecretAccessKey,
     AWS_SESSION_TOKEN: awsAccessValues.SessionToken,
     DAM_USER: user,
     DAM_ACCOUNT: account,
     DAM_PROFILE: profile,
-  };
+  }
 
+  const newDotEnvValues = mergeRight(dotEnvValues, awsDotEnvValues)
   const newDotValuesStringify = Object.entries(newDotEnvValues).map((value) => stringifyPair(value)).join(os.EOL)
 
 
